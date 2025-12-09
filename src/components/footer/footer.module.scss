@@ -1,0 +1,32 @@
+.footer {
+    margin-top:30px ;
+    padding: 10px;
+    background-color: #0061bb;
+    color: #fff;
+}
+
+.infoAddress {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+}
+
+.boxInfor {
+    background-color: black;
+    width: fit-content;
+    padding: 5px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.lobby {
+    padding: 30px 150px;
+    width: 100%;
+    height: 100%;
+    background: url("https://ts.hust.edu.vn/public/images/bgFOOT.png");
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    
+}

@@ -1,0 +1,22 @@
+#editorjs-container {
+    background-color: #f8f8f8 !important;
+    padding: 20px 30px;
+    margin-bottom: 20px;
+}
+
+
+
+.editor {
+    background-color: #f8f8f8;
+    width: 100%;
+    padding: 0 20px;
+
+    // ✅ Override EditorJS styles
+    :global {
+
+        .ce-block__content,
+        .ce-toolbar__content {
+            max-width: 100% !important;
+        }
+    }
+}

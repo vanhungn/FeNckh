@@ -1,0 +1,134 @@
+.header {
+    background-color: #fff;
+    position: fixed;
+    left: 0;
+    right: 0;
+    z-index: 10;
+
+}
+
+.boxCategory {
+    cursor: pointer;
+    padding: 0 25px;
+    border-right: 1px #cccbcb solid;
+    color: #e2e2e2;
+
+    &:hover {
+        color: #fff;
+    }
+}
+
+.categoryTop {
+    background-color: #0d4d94;
+    padding: 5px 100px;
+    display: flex;
+    justify-content: flex-end;
+
+    font-size: 14px;
+
+}
+
+.logo {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.category {
+    padding: 0px 100px;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.boxLogo {
+    display: flex;
+    align-items: center;
+    gap: 10px
+}
+
+.nameVN {
+    margin-bottom: 5px;
+    color: #0061bb;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.nameEl {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.boxCategoryBottom {
+
+    padding: 30px;
+    height: 100%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    position: relative;
+
+    &:hover {
+        background-color: #0061bb;
+
+        .title,
+        .iconDown {
+            color: #fff;
+        }
+
+        .categorySmall {
+            height: auto;
+            opacity: 1;
+            margin-top: 0;
+        }
+
+    }
+}
+
+.categorySmall {
+    border-radius: 3px;
+    padding-top: 10px;
+    width: 140%;  
+    opacity: 0;
+    overflow: hidden;
+    margin-top: 30px;
+    position: absolute;
+    background-color: #fff;
+    top: 100%;
+    left: 0;
+    transition: 0.5s all;
+    height: 0;
+
+    p {
+        
+        margin: 0;
+        color: black;
+        padding: 10px;
+
+        &:hover {
+            background-color: #0061bb;
+            color: #fff;
+        }
+    }
+
+}
+
+.title {
+    margin: 0;
+    color: rgb(17, 17, 17);
+    font-size: 16px;
+
+
+}
+
+.iconDown {
+    color: rgb(17, 17, 17);
+}
+
+.listCategory {
+    display: flex;
+}

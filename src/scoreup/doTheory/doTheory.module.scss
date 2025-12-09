@@ -1,0 +1,18 @@
+.doTheory {
+    margin: 0 220px;
+    padding: 20px;
+    height: 100vh;
+    overflow: scroll;
+    scrollbar-width: none;
+    /* Ẩn cho Firefox */
+    -ms-overflow-style: none;
+    /* Ẩn cho IE và Edge cũ */
+    background-color: #e4f7f9;
+
+}
+.doTheory::-webkit-scrollbar {
+    display: none;
+}
+.theory {
+    background: linear-gradient(180deg, #b6e3e0 0%, #d9f0ef 40%, #a6d5d2 100%);
+}
