@@ -90,7 +90,7 @@ api.interceptors.response.use(
                 console.error("Refresh token failed:", err.response?.data);
 
                 // ✅ Logout khi refresh token hết hạn
-                if (err.response?.status === 401) {
+                if (err.response?.status === 403) {
                     localStorage.removeItem("token");
                     window.location.href = "/";
                 }

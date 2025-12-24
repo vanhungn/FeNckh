@@ -157,7 +157,7 @@ export const DocumentAdminDetail = () => {
                     <>
                         <div className={cx('listDocx')}>
                             {
-                                dataDocx.map((item, index) => {
+                                dataDocx?.map((item, index) => {
                                     const extension = item.name?.split(".").pop().toLowerCase();
                                     const viewerUrl = `https://docs.google.com/viewer?url=${encodeURIComponent(item?.url)}&embedded=true`;
                                     return (

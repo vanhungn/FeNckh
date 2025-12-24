@@ -35,8 +35,8 @@ export const DocumentAdmin = ({ path, title, headerDocx, bin }) => {
         try {
             setLoadingComponent(true)
             const data = await Get('/document/list?limit=12')
-            setDataDocument(data.data.data)
-            setTotalPage(data.data.total)
+            setDataDocument(data?.data?.data)
+            setTotalPage(data?.data.total)
         } catch (error) {
             console.log(error)
         } finally {
@@ -184,7 +184,7 @@ export const DocumentAdmin = ({ path, title, headerDocx, bin }) => {
                         <div className={cx("inputImg")}>
                             <p className={cx('titleInput')}> <b>Chọn file *</b> </p>
                             <div style={{ display: "flex", gap: 15 }}>
-                                {img.map((item, index) => (
+                                {img?.map((item, index) => (
                                     <div key={index} className={cx("img-upload-item")}>
                                         <CFormInput
                                             type="file"

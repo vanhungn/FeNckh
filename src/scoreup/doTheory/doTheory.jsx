@@ -1,7 +1,7 @@
 import classNames from "classnames/bind";
 import style from "./doTheory.module.scss";
 import { useEffect, useState } from "react";
-import { Get } from "../../baseService/baseService";
+import { Get, Post } from "../../baseService/baseService";
 import { useParams } from "react-router-dom";
 import { SolidQuestion } from "../../components/SolidQuestion/SolidQuestion";
 import { CButton, CModal, CModalBody, CModalFooter, CModalHeader, CModalTitle } from '@coreui/react'
@@ -33,37 +33,23 @@ export const DoTheory = () => {
             [questionIndex]: key // lưu key đã chọn
         }));
     };
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        setSubmitted(true);
-        let score = 0;
-        dataTheory.list.forEach((q, index) => {
-            if (answers[index] === q.answer) {
-                score++;
-            }
-        });
-        setResult(` ${score} / ${dataTheory.list.length}`);
-        let checkId = JSON.parse(localStorage.getItem("historyID")) || [];
-
-        if (checkId.some(item => item.id === code)) {
-            checkId = checkId.map((item) => {
-                if (item.id === code) {
-                    return {
-                        ...item,
-                        result: ` ${score} / ${dataTheory.list.length}`
-                    }
+    const handleSubmit = async (e) => {
+        try {
+            e.preventDefault();
+            setSubmitted(true);
+            let score = 0;
+            dataTheory.list.forEach((q, index) => {
+                if (answers[index] === q.answer) {
+                    score++;
                 }
-                return item
-            })
-        } else {
-
-            checkId.push({
-                id: code, name: dataTheory.chapter, result: ` ${score} / ${dataTheory.list.length}`
-            })
-
+            });
+            setResult(` ${score} / ${dataTheory.list.length}`);
+            const user = JSON.parse(localStorage.getItem('user'))
+            const core = score * (10 / dataTheory.list.length)
+            await Post('/mark/create', { userId: user._id, theoryId: code, core: core })
+        } catch (error) {
+            console.log(error)
         }
-        localStorage.setItem("historyID", JSON.stringify(checkId));
-
     };
     return (
 
@@ -71,10 +57,7 @@ export const DoTheory = () => {
 
             <form >
                 <div className={cx("doTheory")}>
-                    <div className={cx("header")}>
-                        <h2>{dataTheory?.chapter}</h2>
 
-                    </div>
                     <div style={{ display: submitted ? "flex" : "none", justifyContent: "flex-end", margin: "40px 0 0 0 " }}>
                         <h5>
                             Điểm: {result}
@@ -82,32 +65,55 @@ export const DoTheory = () => {
 
                     </div>
                     <div className={cx("questionList")}>
+
                         {dataTheory?.list?.map((item, index) => (
                             <SolidQuestion
                                 key={index}
                                 index={index}
                                 title={item.question}
+                                explain={submitted ? item.explain : ""}
                                 img={item.imgUrl}
-                                options={item.options} // options phải có key: "A","B","C"
+                                options={item.options} 
                                 selected={answers[index]}
                                 onSelect={handleSelect}
-                                answer={item} // mỗi câu có correctKey
+                                answer={item} 
                                 submitted={submitted}
                             />
                         ))}
                     </div>
-                    <ModalInform result={`${Object.keys(answers).length}/${dataTheory?.list?.length||0}`} handleSubmit={handleSubmit} setVisible={setVisible} visible={visible} />
-                    <div style={{ display: "flex", justifyContent: "flex-end", margin: '20px', gap: 20 }}>
-                        <CButton style={{ cursor: "pointer" }} color="primary" disabled={submitted} onClick={() => setVisible(!visible)}>
-                            Nộp bài
-                        </CButton>
-                        <CButton style={{ cursor: "pointer" }} color="danger" onClick={() => window.location.reload()}>
-                            Làm lại
-                        </CButton>
-                    </div>
+                    <ModalInform result={`${Object.keys(answers).length}/${dataTheory?.list?.length || 0}`} handleSubmit={handleSubmit} setVisible={setVisible} visible={visible} />
+
 
                 </div>
             </form>
+            <div style={{ display: "flex", flexDirection: "column", justifyContent: "space-between", padding: "20px 10px", borderLeft: "1px black solid" }}>
+                <div>
+                    <h5>Số câu hỏi:</h5>
+                    <div className={cx('showSelect')}>
+                        {
+                            dataTheory.list?.map((item, index) => {
+                                return (
+                                    <div style={{ backgroundColor: Object.keys(answers).includes(index.toString()) ? "#0061bb" : "", cursor: "pointer" }}
+                                        key={index} className={cx('boxShow')}>
+                                        <a style={{ color: Object.keys(answers).includes(index.toString()) ? "#fff" : "#000", textDecoration: "none" }}
+                                            href={`#question-${index + 1}`}>{index + 1}</a>
+                                    </div>
+                                )
+                            })
+                        }
+                    </div>
+                </div>
+
+                <div style={{ display: "flex", flexDirection: "column", margin: '20px', gap: 20 }}>
+                    <CButton style={{ cursor: "pointer", backgroundColor: "#0061bb", color: "#fff", }} disabled={submitted} onClick={() => setVisible(!visible)}>
+                        Nộp bài
+                    </CButton>
+                    <CButton style={{ cursor: "pointer" }} color="danger" onClick={() => window.location.reload()}>
+                        Làm lại
+                    </CButton>
+                </div>
+            </div>
+
         </div>
     );
 };

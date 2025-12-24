@@ -14,6 +14,9 @@ import { Contact } from "./contact/contact";
 import { Admin } from "./admin/admin"
 import { Information } from "./information/infomation";
 import { InformationDetail } from "./informationDetail/informationDetail";
+import { TrainingTechnology } from "./training/trainingTechnology";
+import { TrainingDesign } from "./training/trainingDesign";
+import { InfoSearch } from "./inforSearch/inforSearch";
 import './App.css'
 import '@coreui/coreui/dist/css/coreui.min.css';
 
@@ -44,6 +47,9 @@ function App() {
           <Route path="/contact" element={<Contact />} />
           <Route path="/information" element={<Information />} />
           <Route path="/information/detail/:_id" element={<InformationDetail />} />
+          <Route path="/training/technology" element={<TrainingTechnology />} />
+          <Route path="/training/design" element={<TrainingDesign />} />
+          <Route path="/search" element={<InfoSearch />} />
           <Route path="/" element={<Home />} />
         </Route>
 

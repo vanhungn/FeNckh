@@ -9,7 +9,7 @@ import {
     CNavItem,
     CNavTitle,
 } from '@coreui/react'
-import { cilFile, cilInfo, cilLan, cilLibrary } from '@coreui/icons'
+import { cilCheckCircle, cilFile, cilInfo, cilLan, cilLibrary } from '@coreui/icons'
 import CIcon from '@coreui/icons-react'
 import { AdminDocument } from './adminDocument/adminDocument';
 import { DocumentAdminDetail } from './documentAdminDetail/documentAdminDetail';
@@ -21,9 +21,11 @@ import { News } from './news/news';
 import classNames from "classnames/bind";
 import { CreateNews } from './news/createNews/createNews';
 import { UpdateNews } from './news/updateNews/updateNews';
+import { ContactAdmin } from './contact/contact';
+import { Diligence } from './diligence/diligence';
 import style from "./admin.module.scss"
 import { NavLink, Route, Routes, useLocation, useParams } from 'react-router-dom';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 const cx = classNames.bind(style)
 
 export const Admin = () => {
@@ -34,6 +36,15 @@ export const Admin = () => {
     if (location.pathname !== `/admin/news/update/${_id}` || location.pathname !== "/admin/news/create") {
         localStorage.removeItem("InitialData")
     }
+    const pathQuestion = location.pathname.split("/")
+    pathQuestion.pop()
+    const joinQuestion = pathQuestion.join('/')
+    console.log(joinQuestion)
+    useEffect(() => {
+        if (joinQuestion === '/admin/theory/question') {
+            setSidebar(true)
+        }
+    }, [])
     return (
         <div className={cx('admin')}>
             <CSidebar style={{ height: "100vh" }} className={`border-end ${cssSidebar}`}>
@@ -78,6 +89,11 @@ export const Admin = () => {
                             <CIcon customClassName="nav-icon" icon={cilInfo} /> Thông tin{' '}
                         </CNavItem>
                     </NavLink>
+                    <NavLink style={{ textDecoration: "none" }} to={'/admin/diligence'}>
+                        <CNavItem className={cx(location.pathname === '/admin/diligence' ? "active" : "category")}>
+                            <CIcon customClassName="nav-icon" icon={cilCheckCircle} /> Chuyên cần{' '}
+                        </CNavItem>
+                    </NavLink>
                 </CSidebarNav>
                 <CSidebarHeader className="border-top">
                     <CSidebarToggler />
@@ -94,6 +110,8 @@ export const Admin = () => {
                     <Route path='/news' element={<News />} />
                     <Route path='/news/create' element={<CreateNews />}></Route>
                     <Route path='/news/update/:_id' element={<UpdateNews />}></Route>
+                    <Route path='/contact' element={<ContactAdmin />} />
+                    <Route path='/diligence' element={<Diligence />} />
                 </Routes>
             </div>
         </div>

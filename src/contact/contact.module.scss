@@ -13,7 +13,7 @@
 
 .addressContact {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 2fr 1fr 1fr;
 }
 
 .boxContact {
@@ -60,6 +60,7 @@
 .btnContact {
     margin: 15px 0;
     width: 100%;
+
     &:hover {
         background-color: #024687 !important;
     }
@@ -74,5 +75,45 @@
         color: red;
         font-size: 12px;
         font-family: 'Roboto', sans-serif;
+    }
+}
+
+@media(max-width:1024px) {
+    .mapAndFormContact {
+        grid-template-columns: 1fr;
+    }
+
+    .map {
+        width: 100% !important;
+    }
+
+    .addressContact {
+        grid-template-columns: 1fr;
+
+        .boxContact {
+            padding: 10px;
+        }
+    }
+
+    .boxBtnContact {
+        display: flex;
+        justify-content: center;
+
+        .btnContact {
+            width: fit-content;
+            padding: 5px 60px !important;
+        }
+    }
+
+    .contact {
+        padding-top: 10vh;
+    }
+
+
+}
+
+@media (max-width:540px) {
+    .titleContact {
+        font-size: 26px !important;
     }
 }

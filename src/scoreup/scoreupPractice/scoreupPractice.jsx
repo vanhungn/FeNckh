@@ -2,34 +2,66 @@ import classNames from "classnames/bind";
 import style from "./scoreupPractice.module.scss"
 import { useSearchParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Get } from "../../baseService/baseService";
+import { CButton, CFormInput } from "@coreui/react";
 const cx = classNames.bind(style)
-
+const LIMIT = 12;
 export const ScoreUpPractice = () => {
     const navigate = useNavigate()
-    const [selectCode, setSelectCode] = useState('')
     const [dataAlgorithm, setDataAlgorithm] = useState([])
-    const [listAlgorithm, setListAlgorithm] = useState([])
-    const CallApi = async () => {
+    const listRef = useRef(null);
+    const loadingRef = useRef(false);
+    const [loading, setLoading] = useState(false);
+    const [page, setPage] = useState(1);
+    const [hasMore, setHasMore] = useState(true);
+    const [search, setSearch] = useState('')
+    const CallApi = async (pageNumber, keyword = search) => {
+        if (loadingRef.current) return;
+        if (pageNumber !== 1 && !hasMore) return;
+        loadingRef.current = true
         try {
-            const data = await Get('/problem?typeOf=Cau_truc_du_lieu_va_giai_thuat')
-            const list = await Get('/problem?typeOf=Thuat_toan')
-            setDataAlgorithm(data?.data?.data)
-            setListAlgorithm(list?.data?.data)
+            const data = await Get(`/problem?skip=${pageNumber}&limit=12&search=${keyword}`)
+            const newData = data?.data?.data||[]
+            setDataAlgorithm(prev =>
+                pageNumber === 1 ? newData : [...prev, ...newData]
+            );
+            setHasMore(newData.length === LIMIT);
         } catch (error) {
             console.log(error)
+        } finally {
+            loadingRef.current = false;
+            setLoading(false);
         }
     }
+    const handleScroll = useCallback(() => {
+        const el = listRef.current;
+        if (!el || loadingRef.current || !hasMore) return
+        if (el.scrollTop + el.clientHeight >= el.scrollHeight - 100) {
+            setPage(prev => prev + 1)
+        }
+    }, [hasMore])
     useEffect(() => {
-        CallApi()
-    }, [])
-    const handleOnchangeCode = (e) => {
-        setSelectCode(e.target.value)
-    }
-    const handleDoHomework = () => {
+        CallApi(page);
+    }, [page]);
+    useEffect(() => {
+        
+        CallApi(1);
+    }, []);
+    useEffect(() => {
+        // 🔥 reset infinite scroll khi search đổi
+       setPage(1);
+        setHasMore(true);
+        setDataAlgorithm([]);
+        listRef.current && (listRef.current.scrollTop = 0);
+        CallApi(1);
+    }, [search]);
 
-        navigate(`/scoreup/practice/algorithm/${selectCode}`)
+    const handleDoHomework = (code) => {
+        navigate(`/scoreup/practice/algorithm/${code}`)
+    }
+    const handleSearch = async (e) => {
+        setSearch(e.target.value)
     }
     return (
         <div className={cx('practice')}>
@@ -39,40 +71,24 @@ export const ScoreUpPractice = () => {
                     <h5>Lướt xuống để bắt đầu luyện tập!</h5>
                 </div>
             </div>
-            <div className={cx('listPractice')}>
+            <CFormInput className={cx("inputSearch")} onChange={handleSearch} style={{ width: "50%", margin: "15px 0 0 0 ", boxShadow: "rgb(83, 144, 219) 0px 8px 24px" }} placeholder="Tìm kiếm..." />
+            <div className={cx('listPractice')}
+                ref={listRef}
+                onScroll={handleScroll}
+            >
 
-                <div className={cx('boxTitle')}>
-                    <h3>Luyện tập cấu trúc dữ liệu và giải thuật</h3>
-                    <p>Luyện tập các bài toán cơ bản và nâng cao về cấu trúc dữ liệu và giải thuật</p>
-                    <select style={{ padding: 5, margin: "10px 0px" }} name="" id="" onChange={handleOnchangeCode}  >
-                        <option value="">Chọn Thuật toán</option>
-                        {
-                            dataAlgorithm?.map((list, index) => {
-                                return (
-                                    <option key={index} value={list?._id}>{list?.title}</option>
-                                )
-                            })
-                        }
-                    </select>
-                    <button onClick={() => handleDoHomework()} type="button" className={cx('btnTitle')}>Làm bài</button>
-
-                </div>
-                <div className={cx('boxTitle')}>
-                    <h3>Thuật toán</h3>
-                    <p>Tập hợp các bước tuần tự, có thứ tự, rõ ràng và hữu hạn, dùng để giải quyết một bài toán hoặc thực hiện một nhiệm vụ cụ thể</p>
-                    <select style={{ padding: 5, margin: "10px 0px" }} name="" id="" onChange={handleOnchangeCode}  >
-                        <option value="">Chọn Thuật toán</option>
-                        {
-                            listAlgorithm?.map((list, index) => {
-                                return (
-                                    <option key={index} value={list?._id}>{list?.title}</option>
-                                )
-                            })
-                        }
-                    </select>
-                    <button onClick={() => handleDoHomework()} type="button" className={cx('btnTitle')}>Làm bài</button>
-                </div>
+                {
+                    dataAlgorithm?.map((list, index) => {
+                        return (
+                            <div key={index} className={cx('boxTitle')}>
+                                <h4>{list.title}</h4>
+                                <CButton className={cx('btnTitle')} type="button" onClick={() => handleDoHomework(list._id)} > Luyện tập </CButton>
+                            </div>
+                        )
+                    })
+                }
             </div>
+            {loading && <LoadingComponent />}
         </div>
     )
 }

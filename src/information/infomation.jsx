@@ -24,7 +24,6 @@ export const Information = () => {
             setDataNews(data.data.data)
             setTotalPage(data.data.total)
             setCounts(data.data.counts)
-            console.log(data.data.counts)
 
         } catch (error) {
             console.log(error)
@@ -71,7 +70,7 @@ export const Information = () => {
     const handleNews = (type) => {
         navigate(`/information?info=${type}`)
     }
-    const handleNavigateDetail=(id)=>{
+    const handleNavigateDetail = (id) => {
         navigate(`/information/detail/${id}`)
     }
     return (
@@ -79,9 +78,9 @@ export const Information = () => {
             <div className={cx('banner')}>
                 <img src={banner[0]?.img} alt="" />
                 <div className={cx('contentBanner')}>
-                    <h3>{banner[0]?.title}</h3>
-                    <div >
-                        <span style={{ cursor: "pointer" }}> <u>Trang chủ</u></span>
+                    <h3 className={cx('titleInfo')}>{banner[0]?.title}</h3>
+                    <div>
+                        <span style={{ cursor: "pointer" }} onClick={() => navigate("/")}> <u>Trang chủ</u></span>
                         <span style={{ margin: "0px 5px" }}>/</span>
                         <span>{banner[0]?.title}</span>
                     </div>
@@ -90,11 +89,11 @@ export const Information = () => {
             </div>
             <div style={{ width: "80%", margin: "auto", paddingTop: 40 }}>
                 <div>
-                    <CFormInput onChange={handleOnchangeSearch} type="text" size="lg" placeholder="Tìm kiếm tin tức" aria-label="lg input example" />
+                    <CFormInput className={cx('search')} onChange={handleOnchangeSearch} type="text" size="lg" placeholder="Tìm kiếm tin tức" aria-label="lg input example" />
                 </div>
-                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 15, marginTop: 30 }}>
+                <div className={cx('ListboxNews')} style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 15, marginTop: 30 }}>
                     <div>
-                        <h1 style={{ color: "#0061bb", fontWeight: 600 }}>{banner[0]?.title}</h1>
+                        <h1 className={cx('titleInfoContent')} style={{ color: "#0061bb", fontWeight: 600 }}>{banner[0]?.title}</h1>
                         <hr />
                         {
                             dataNews?.map((item, index) => {
@@ -104,16 +103,16 @@ export const Information = () => {
                                 const year = d.getFullYear();
                                 const time = `${day}/${month}/${year}`;
                                 return (
-                                    <div key={index} className={cx('boxNews')} onClick={()=>handleNavigateDetail(item._id)} >
+                                    <div key={index} className={cx('boxNews')} onClick={() => handleNavigateDetail(item._id)} >
                                         <img className={cx('imgNews')} src={item.img.url} alt="" />
-                                        <div>
+                                        <div className={cx('contentNews')}>
                                             <h5 style={{ color: "#0061bb", fontWeight: 600 }}>{item.title}
                                             </h5>
                                             <p>
                                                 {item.note.slice(0, 180)}
                                                 {item.note.length > 180 && "…"}
                                             </p>
-                                            <p className={cx('timeNews')} >{time}</p>
+                                            <p className={cx('timeNews')} style={{ color: "gray" }}>{time}</p>
                                         </div>
 
                                     </div>
@@ -124,23 +123,23 @@ export const Information = () => {
                         <TotalPage page={totalPage} colorTotal={colorTotal} handlePage={handlePage} />
                     </div>
                     <div style={{ color: "#0061bb", fontWeight: 600 }}>
-                        <h1 style={{ fontWeight: 600 }}>Phân loại</h1>
+                        <h1 style={{ fontWeight: 600 }} className={cx('titleInfoContent')}>Phân loại</h1>
                         <hr />
-                        <p className={cx('category')} onClick={() => handleNews("event")}>Sự kiện({counts?.event || 0}) </p>
-                        <p className={cx('category')} onClick={() => handleNews("enrollment")}>Tuyển sinh ({counts?.enrollment || 0}) </p>
-                        <p className={cx('category')} onClick={() => handleNews("generalNews")}>Tin tổng hợp ({counts?.generalNews || 0})</p>
-                        <p className={cx('category')} onClick={() => handleNews("studyTrip")}>Du học ({counts?.studyTrip || 0}) </p>
-                        <p className={cx('category')} onClick={() => handleNews("practice")}>Thực tập ({counts?.practice || 0}) </p>
-                        <p className={cx('category')} onClick={() => handleNews("toGuide")}>Hướng dẫn ({counts?.toGuide || 0}) </p>
-                        <p className={cx('category')} onClick={() => handleNews("notify")}>Thông báo ({counts?.notify || 0})</p>
-                        <p className={cx('category')} onClick={() => handleNews("rules")}>Quy định ({counts?.rules || 0}) </p>
-                        <p className={cx('category')} onClick={() => handleNews("active")}>Hoạt động ({counts?.active || 0}) </p>
-                        <p className={cx('category')} onClick={() => handleNews("studyGuide")}>Hướng dẫn học tập ({counts?.studyGuide || 0})</p>
-                        <p className={cx('category')} onClick={() => handleNews("itClub")}>Câu lạc bộ IT ({counts?.itClub || 0})</p>
-                        <p className={cx('category')} onClick={() => handleNews("seminar")}>Hội thảo ({counts?.seminar || 0}) </p>
-                        <p className={cx('category')} onClick={() => handleNews("topic")}>Đề tài ({counts?.topic || 0}) </p>
-                        <p className={cx('category')} onClick={() => handleNews("scientificResearchLecturer")}>Nghiên cứu khoa học Giảng viên ({counts?.scientificResearchLecturer || 0}) </p>
-                        <p className={cx('category')} onClick={() => handleNews("studentScientificResearch")}>Nghiên cứu khoa học Sinh viên ({counts?.studentScientificResearch || 0}) </p>
+                        <p style={{ width: "fit-content" }} className={cx('category')} onClick={() => handleNews("event")}>Sự kiện({counts?.event || 0}) </p>
+                        <p style={{ width: "fit-content" }} className={cx('category')} onClick={() => handleNews("enrollment")}>Tuyển sinh ({counts?.enrollment || 0}) </p>
+                        <p style={{ width: "fit-content" }} className={cx('category')} onClick={() => handleNews("generalNews")}>Tin tổng hợp ({counts?.generalNews || 0})</p>
+                        <p style={{ width: "fit-content" }} className={cx('category')} onClick={() => handleNews("studyTrip")}>Du học ({counts?.studyTrip || 0}) </p>
+                        <p style={{ width: "fit-content" }} className={cx('category')} onClick={() => handleNews("practice")}>Thực tập ({counts?.practice || 0}) </p>
+                        <p style={{ width: "fit-content" }} className={cx('category')} onClick={() => handleNews("toGuide")}>Hướng dẫn ({counts?.toGuide || 0}) </p>
+                        <p style={{ width: "fit-content" }} className={cx('category')} onClick={() => handleNews("notify")}>Thông báo ({counts?.notify || 0})</p>
+                        <p style={{ width: "fit-content" }} className={cx('category')} onClick={() => handleNews("rules")}>Quy định ({counts?.rules || 0}) </p>
+                        <p style={{ width: "fit-content" }} className={cx('category')} onClick={() => handleNews("active")}>Hoạt động ({counts?.active || 0}) </p>
+                        <p style={{ width: "fit-content" }} className={cx('category')} onClick={() => handleNews("studyGuide")}>Hướng dẫn học tập ({counts?.studyGuide || 0})</p>
+                        <p style={{ width: "fit-content" }} className={cx('category')} onClick={() => handleNews("itClub")}>Câu lạc bộ IT ({counts?.itClub || 0})</p>
+                        <p style={{ width: "fit-content" }} className={cx('category')} onClick={() => handleNews("seminar")}>Hội thảo ({counts?.seminar || 0}) </p>
+                        <p style={{ width: "fit-content" }} className={cx('category')} onClick={() => handleNews("topic")}>Đề tài ({counts?.topic || 0}) </p>
+                        <p style={{ width: "fit-content" }} className={cx('category')} onClick={() => handleNews("scientificResearchLecturer")}>Nghiên cứu khoa học Giảng viên ({counts?.scientificResearchLecturer || 0}) </p>
+                        <p style={{ width: "fit-content" }} className={cx('category')} onClick={() => handleNews("studentScientificResearch")}>Nghiên cứu khoa học Sinh viên ({counts?.studentScientificResearch || 0}) </p>
 
 
                     </div>

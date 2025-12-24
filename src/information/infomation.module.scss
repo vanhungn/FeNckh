@@ -70,7 +70,107 @@
 
 .category {
     cursor: pointer;
+
     &:hover {
         color: #024c92;
+    }
+}
+
+@media(max-width:1024px) {
+    .ListboxNews {
+        grid-template-columns: 2fr 1fr !important;
+
+        .boxNews {
+            .imgNews {
+                width: 150px;
+                height: 150px;
+            }
+
+            h5 {
+                font-size: 18px !important;
+            }
+
+            p {
+                font-size: 14px !important;
+                margin: 0;
+            }
+        }
+    }
+
+    .information {
+        padding-top: 5vh;
+    }
+
+    .titleInfo {
+        font-size: 30px !important;
+    }
+
+    .titleInfoContent {
+        font-size: 26px !important;
+    }
+}
+
+@media(max-width:540px) {
+    .ListboxNews {
+        display: flex !important;
+        flex-direction: column;
+        gap: 10px
+    }
+
+    .titleInfoContent {
+        font-size: 18px !important;
+    }
+
+    .boxNews {
+        .contentNews {
+            h5 {
+                font-size: 14px !important;
+
+            }
+
+            p {
+                font-size: 11px !important;
+            }
+        }
+    }
+
+    .category {
+        font-size: 12px !important;
+    }
+
+    .search {
+        font-size: 14px !important;
+    }
+
+}
+
+@media (max-width:431px) {
+    .boxNews {
+        .imgNews {
+            width: 100% !important;
+            height: 100% !important;
+        }
+
+        .contentNews {
+            h5 {
+                font-size: 12px !important;
+            }
+
+            p {
+                display: none;
+            }
+
+            .timeNews {
+                display: block;
+            }
+        }
+    }
+
+    .titleInfoContent {
+        font-size: 16px !important;
+    }
+
+    .search {
+        font-size: 12px !important;
     }
 }

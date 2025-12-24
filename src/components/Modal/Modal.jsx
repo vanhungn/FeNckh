@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import { CButton, CModal, CModalBody, CModalFooter, CModalHeader, CModalTitle } from '@coreui/react'
 
 export const ModalInform = ({ handleSubmit, setVisible, visible, result }) => {
-
     return (
         <CModal
             visible={visible}

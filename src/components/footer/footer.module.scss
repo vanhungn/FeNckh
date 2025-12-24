@@ -1,14 +1,17 @@
 .footer {
-    margin-top:30px ;
-    padding: 10px;
-    background-color: #0061bb;
+    margin-top: 30px;
+    padding: 30px 100px;
+    background-color: #0d4d94;
     color: #fff;
+    position: relative;
 }
 
 .infoAddress {
     display: flex;
     gap: 5px;
     align-items: center;
+
+
 }
 
 .boxInfor {
@@ -20,13 +23,56 @@
 }
 
 .lobby {
-    padding: 30px 150px;
-    width: 100%;
-    height: 100%;
+
+    width: 50%;
+    height: 20vh;
     background: url("https://ts.hust.edu.vn/public/images/bgFOOT.png");
     background-size: 100% 100%;
     background-repeat: no-repeat;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+}
+
+.info {
+    position: relative;
+    z-index: 2;
+}
+
+@media (max-width:1220px) {
+    .footer {
+        padding: 20px 90px;
+    }
+
+    .infoAddress {
+        span {
+            font-size: 14px;
+        }
+    }
+}
+
+@media (max-width:1024px) {
+    .lobby {
+        top: 40%
+    }
+
+    .titleAddress {
+        font-size: 20px;
+    }
+}
+
+@media(max-width:540px) {
+    .footer {
+        padding: 20px 40px;
+    }
+
+    .titleAddress {
+        font-size: 16px;
+    }
+
+    .info {
+        display: block !important;
+    }
 }

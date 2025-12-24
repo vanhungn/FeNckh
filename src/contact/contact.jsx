@@ -2,7 +2,7 @@ import classNames from "classnames/bind";
 import style from "./contact.module.scss"
 import { useFormik } from "formik";
 import * as Yup from "yup"
-import { CButton, CForm, CFormInput, CFormTextarea } from "@coreui/react";
+import { CButton, CForm, CFormInput, CFormSelect, CFormTextarea } from "@coreui/react";
 import { Input } from "../components/inputs/inputs";
 import { Post } from "../baseService/baseService";
 import toast, { Toaster } from "react-hot-toast";
@@ -13,14 +13,9 @@ const cx = classNames.bind(style)
 
 export const Contact = () => {
     const [loading, setLoading] = useState(false)
-    const location = {
-        name: "Trường Đại Học Công Nghiệp Việt Hung",
-        address: "KCN, Thạch Thất, Hà Nội, Việt Nam",
-        lat: 21.020806847387483,
-        lng: 105.60759250238073,
-    };
+    const [location, setLocation] = useState("https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d452.0096718738645!2d105.44380261559887!3d21.111110774780382!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31345f3390d8a149%3A0x372b9b5e16ee7935!2zVHLGsOG7nW5nIMSQ4bqhaSBo4buNYyBDw7RuZyBuZ2hp4buHcCBWaeG7h3QgLSBIdW5n!5e0!3m2!1svi!2s!4v1765420403880!5m2!1svi!2s")
 
-    const mapEmbedUrl = `https://maps.google.com/maps?q=${encodeURIComponent(location.name)}@${location.lat},${location.lng}&z=15&output=embed`;
+    const mapEmbedUrl = `https://maps.app.goo.gl/we2Vqd8pi24RStxf8`;
     const formik = useFormik({
         initialValues: {
             name: "",
@@ -51,10 +46,15 @@ export const Contact = () => {
             }
         }
     })
+    const handleOnchangeMap = (e) => {
+
+        setLocation(e.target.value)
+    }
+
     return (
         <div className={cx('contact')}>
             <Toaster position="top-right" />
-            <h3>Liên hệ với Chúng tôi</h3>
+            <h3 className={cx('titleContact')}>Liên hệ với Chúng tôi</h3>
             <div className={cx('addressContact')}>
                 <div className={cx('boxContact')}>
                     <h4>Địa chỉ</h4>
@@ -63,7 +63,21 @@ export const Contact = () => {
                             <path d="M12 21s-7-4.5-7-10a7 7 0 1 1 14 0c0 5.5-7 10-7 10z" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
                             <circle cx="12" cy="10" r="2.4" fill="currentColor" />
                         </svg>
-                        <span >KCN, Thạch Thất, Hà Nội</span>
+                        <span >Số 16 Hữu Nghị, phường Tùng Thiện, TP. Hà Nội</span>
+                    </div>
+                    <div className={cx('info')}>
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                            <path d="M12 21s-7-4.5-7-10a7 7 0 1 1 14 0c0 5.5-7 10-7 10z" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+                            <circle cx="12" cy="10" r="2.4" fill="currentColor" />
+                        </svg>
+                        <span >Số 88, đường 419 - Tây Phương, TP. Hà Nội</span>
+                    </div>
+                    <div className={cx('info')}>
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                            <path d="M12 21s-7-4.5-7-10a7 7 0 1 1 14 0c0 5.5-7 10-7 10z" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+                            <circle cx="12" cy="10" r="2.4" fill="currentColor" />
+                        </svg>
+                        <span > Số 27 Lê Văn Lương, phường Thanh Xuân, TP. Hà Nội</span>
                     </div>
                 </div>
                 <div className={cx('boxContact')}>
@@ -88,17 +102,13 @@ export const Contact = () => {
             </div>
             <div className={cx('mapAndFormContact')}>
                 <div>
-                    <iframe
-                        src={mapEmbedUrl}
-                        width="100%"
-                        height="500"
-                        style={{ border: 0 }}
-                        allowFullScreen
-                        loading="lazy"
-                        referrerPolicy="no-referrer-when-downgrade"
-                        title="Google Map"
-                    />
-
+                    <CFormSelect style={{ width: "fit-content", marginBottom: "10px" }} onChange={handleOnchangeMap}>
+                        <option value='https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1005.6143356454379!2d105.60678294650644!3d21.021011039499594!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x313450b0f9bfffff%3A0xa2288163515f820c!2zVHLGsOG7nW5nIMSQ4bqhaSBI4buNYyBDw7RuZyBOZ2hp4buHcCBWaeG7h3QgSHVuZyAy!5e0!3m2!1svi!2s!4v1765420152364!5m2!1svi!2s'>Cơ sở Sơn Tây</option>
+                        <option value='https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d2736.8481651520833!2d105.6074826975361!3d21.021651773447307!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x313450b0f9bfffff%3A0xa2288163515f820c!2zVHLGsOG7nW5nIMSQ4bqhaSBI4buNYyBDw7RuZyBOZ2hp4buHcCBWaeG7h3QgSHVuZyAy!5e0!3m2!1svi!2sus!4v1765420612502!5m2!1svi!2sus'>Cơ sở Thạch Thất</option>
+                        <option value='https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1862.3491548659256!2d105.80231225913481!3d21.00472715605994!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3135ad05e1b3a375%3A0x14291da3deed9287!2sCenter%20Point!5e0!3m2!1svi!2sus!4v1765420720267!5m2!1svi!2sus'>Cơ sở Lê Văn Lương</option>
+                    </CFormSelect>
+                    <iframe src={location} className={cx('map')} width="600" height="450" style={{ border: 0 }} allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+                    </iframe>
                 </div>
                 <div>
                     <p>Cảm ơn bạn đã quan tâm đến chúng tôi! Nếu bạn có bất kỳ câu hỏi, góp ý hoặc cần hỗ trợ, xin vui lòng điền vào biểu mẫu dưới đây. Nhấp vào nút "Gửi Tin Nhắn" để hoàn tất quá trình.
@@ -169,14 +179,15 @@ export const Contact = () => {
                                 </div>
                             )}
                         </div>
+                        <div className={cx('boxBtnContact')}>
+                            <CButton type={loading ? 'button' : 'submit'} className={cx('btnContact')} style={{ backgroundColor: "#0061bb", color: "#fff", padding: 10 }} >
+                                {
+                                    loading ? <LoadingButton /> : <>Gửi tin nhắn</>
+                                }
+                            </CButton>
+                        </div>
 
-                        <CButton type={loading ? 'button' : 'submit'} className={cx('btnContact')} style={{ backgroundColor: "#0061bb", color: "#fff", padding: 10 }} >
-                            {
-                                loading ? <LoadingButton /> : <>Gửi tin nhắn</>
-                            }
-                        </CButton>
                     </CForm>
-
                 </div>
             </div>
         </div>

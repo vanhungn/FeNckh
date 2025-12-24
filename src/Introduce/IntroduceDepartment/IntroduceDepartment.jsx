@@ -20,7 +20,7 @@ export const IntroduceDepartment = () => {
                 </div>
 
             </div>
-            <h1 style={{ textAlign: "center", color: "#0061bb ", marginTop: "50px" }}>GIỚI THIỆU KHOA CÔNG NGHỆ THÔNG TIN</h1>
+            <h1 className={cx('title')} style={{ textAlign: "center", color: "#0061bb ", marginTop: "50px" }}>GIỚI THIỆU KHOA CÔNG NGHỆ THÔNG TIN</h1>
             <div style={{
                 border: "none",
                 borderTop: "3px solid #0061bb",
@@ -30,11 +30,11 @@ export const IntroduceDepartment = () => {
 
             </div>
             <div style={{ width: "80%", margin: "auto" }}>
-                <div style={{ marginTop: 50, display: "grid", gridTemplateColumns: "1fr 1fr", gap: 15 }}>
+                <div className={cx('introduceContent')} style={{ marginTop: 50, display: "grid", gridTemplateColumns: "1fr 1fr", gap: 15 }}>
                     <div data-aos="fade-up-right">
-                        <img width={"100%"} height={"100%"} src="../../public/1003.jpg" alt="" />
+                        <img width={"100%"} style={{ height: "100%", objectFit: "cover" }} src="../../public/1003.jpg" alt="" />
                     </div>
-                    <div data-aos="fade-up-left">
+                    <div className={cx('content')} data-aos="fade-up-left">
                         <h5 style={{ color: "#0061bb" }}> GIỚI THIỆU CHUNG</h5>
                         <h2 style={{ fontWeight: "600", color: "#0061bb" }}>KHOA CÔNG NGHỆ THÔNG TIN</h2>
                         <p >Khoa Công nghệ thông tin tiền thân là Bộ môn Công nghệ thông tin được thành lập từ năm 2004, thuộc trường Công nghệ, Đại học Kinh tế Quốc dân.
@@ -47,7 +47,7 @@ export const IntroduceDepartment = () => {
 
                 </div>
                 <div data-aos="fade-up">
-                    <h2 style={{ fontWeight: "600", color: "#0061bb", marginTop: 50 }}>CHƯƠNG TRÌNH ĐÀO TẠO</h2>
+                    <h2 className={cx('titleContent')} style={{ fontWeight: "600", color: "#0061bb", marginTop: 50 }}>CHƯƠNG TRÌNH ĐÀO TẠO</h2>
                     <p>Khoa Công nghệ thông tin của NEU cung cấp chương trình đào tạo chất lượng cao, linh hoạt, được cập nhật thường xuyên theo những xu hướng mới nhất trong ngành. Các ngành học chính của khoa bao gồm:
 
                     </p>
@@ -63,20 +63,20 @@ export const IntroduceDepartment = () => {
                     </ul>
                 </div>
                 <div data-aos="fade-up">
-                    <h2 style={{ fontWeight: "600", color: "#0061bb" }}>THÀNH TỰU VÀ ĐÓNG GÓP</h2>
+                    <h2 className={cx('titleContent')} style={{ fontWeight: "600", color: "#0061bb" }}>THÀNH TỰU VÀ ĐÓNG GÓP</h2>
                     <p>Trong suốt hành trình phát triển, khoa đã đào tạo ra hàng nghìn cử nhân CNTT chất lượng cao, hiện đang làm việc và thành công trong nhiều lĩnh vực tại các doanh nghiệp trong nước và quốc tế.
                         Ngoài ra, khoa CNTT còn liên kết với các doanh nghiệp lớn như VNPT, VIETTEL để thúc đẩy nghiên cứu, nhận tài trợ và phát triển các dự án có giá trị thực tiễn cao.
                     </p>
 
                 </div>
                 <div data-aos="fade-up">
-                    <h2 style={{ fontWeight: "600", color: "#0061bb" }}> NGÀNH CÔNG NGHỆ THÔNG TIN (Mã ngành 7480201)</h2>
+                    <h2 className={cx('titleContent')} style={{ fontWeight: "600", color: "#0061bb" }}> NGÀNH CÔNG NGHỆ THÔNG TIN (Mã ngành 7480201)</h2>
 
                     <img width={"100%"} src="../../public/1000.jpg" alt="" />
-                    <h4 style={{ marginTop: 40 }}> NGÀNH CÔNG NGHỆ THÔNG TIN (7480201)</h4>
+                    <h4 className={cx('titleContent')} style={{ marginTop: 40 }}> NGÀNH CÔNG NGHỆ THÔNG TIN (7480201)</h4>
                     <h5>Ngành học làm chủ kỷ nguyên số</h5>
                     <p>------------------------</p>
-                    <h5>BẠN MUỐN TRÚNG TUYỂN ĐẠI HỌC CHÍNH QUY Ngành CÔNG NGHỆ THÔNG TIN</h5>
+                    <h5 className={cx('titleContent')}>BẠN MUỐN TRÚNG TUYỂN ĐẠI HỌC CHÍNH QUY Ngành CÔNG NGHỆ THÔNG TIN</h5>
                     <p>* ĐĂNG KÝ ĐỢT BỔ SUNG TRÊN TRANG TRƯỜNG ĐHCN VIỆT - HUNG để biết ngay kết quả trúng tuyển K49 <br />
                         <b>Link:</b>  <a href="https://dkxettuyen.viu.edu.vn/" target="_blank" rel="noopener noreferrer">https://dkxettuyen.viu.edu.vn/</a>
                     </p>

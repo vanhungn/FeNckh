@@ -22,7 +22,7 @@ export const Login = () => {
             try {
                 const data = await Post('/login', { phone: value.phone, password: value.password })
                 if (data.status == 200) {
-                    toast('thanh cong')
+                    toast('Thành công')
                 }
             } catch (error) {
                 console.log(error)

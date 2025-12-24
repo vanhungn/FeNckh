@@ -104,6 +104,7 @@ export const CreateNews = ({ dataTrans, path }) => {
             });
         }
     }, [formErrors]);
+    console.log(data)
     return (
         <>
             <Toaster position="top-right" />
@@ -126,7 +127,7 @@ export const CreateNews = ({ dataTrans, path }) => {
                                 <option value="enrollment">Tuyển sinh</option>
                                 <option value="generalNews">Tin tổng hợp</option>
                                 <option value="studyTrip">Du học</option>
-                                 <option value="practice">Thực tập</option>
+                                <option value="practice">Thực tập</option>
                                 <option value="toGuide">Hướng dẫn</option>
                                 <option value="notify">Thông báo</option>
                                 <option value="rules">Quy định</option>

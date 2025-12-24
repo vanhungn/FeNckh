@@ -6,7 +6,9 @@ import Quote from '@editorjs/quote';
 import Table from "@editorjs/table";
 import ImageTool from "@editorjs/image";
 import Delimiter from "@editorjs/delimiter";
+import Embed from '@editorjs/embed';
 
+import VideoTool from '@weekwood/editorjs-video';
 import { Post } from "../../baseService/baseService";
 
 export const EditorjsTools = {
@@ -14,7 +16,7 @@ export const EditorjsTools = {
         class: Header,
         config: {
             placeholder: 'Nhập tiêu đề...',
-            levels: [2, 3, 4],
+            levels: [1, 2, 3, 4, 5, 6],
             defaultLevel: 2
         }
     },
@@ -102,17 +104,65 @@ export const EditorjsTools = {
         }
     },
 
-    anyTuneName: {
-        class: AlignmentTuneTool,
-        config: {
-            default: "right",
-            blocks: {
-                header: 'center',
-                list: 'right'
-            }
-        },
-    },
+
     quote: Quote,
-    delimiter: Delimiter
+    delimiter: Delimiter,
+
+    embed: {
+        class: Embed,
+        inlineToolbar: false,
+        config: {
+            services: {
+                youtube: true,
+                vimeo: true,
+                coub: true,
+                codepen: true,
+                imgur: true,
+                gfycat: true,
+                'twitch-channel': true,
+                'twitch-video': true,
+                twitter: true,
+                instagram: true,
+                facebook: true,
+                aparat: true,
+            }
+        }
+    },
+    video: {
+        class: VideoTool,
+        config: {
+            uploader: {
+                async uploadByFile(file) {
+                    try {
+                        console.log('Uploading video:', file.name);
+
+                        const formData = new FormData();
+                        formData.append('video', file);
+
+                        const response = await Post('/news/uploadVideo', formData);
+
+                        console.log('Upload response:', response);
+
+                        if (response.data) {
+                            return response.data;
+                        }
+
+                        return response;
+                    } catch (error) {
+                        console.error('Upload error:', error);
+                        return {
+                            success: 0,
+                            message: error.message || 'Upload failed'
+                        };
+                    }
+                }
+            },
+            player: {
+                controls: true,
+                autoplay: false,
+            },
+        }
+    }
+
 
 };

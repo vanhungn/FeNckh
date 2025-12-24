@@ -1,6 +1,6 @@
 import classNames from "classnames/bind";
 import style from "./question.module.scss";
-import { CButton } from "@coreui/react";
+import { CButton, CFormTextarea } from "@coreui/react";
 import LoadingButton from "../loadingButton/loadingButton";
 import { Input } from "../inputs/inputs";
 import { useEffect, useState } from "react";
@@ -14,19 +14,20 @@ export const Question = ({ callApi, setPage, setHasMore, setDataQuestion, toast,
     const [loading, setLoading] = useState(false)
     const [chapter, setChapter] = useState('')
     const [index, setIndex] = useState([])
+
     const [questions, setQuestions] = useState(
         data?.list ||
         [
             {
-                id: 1,
+                _id: 1,
                 question: '',
                 imgUrl: null,
                 options: [{ key: '', text: '' }],
-                answer: ''
+                answer: '',
+                explain: ""
             }
         ]);
     const { id } = useParams()
-    console.log(data?.list)
     useEffect(() => {
         if (data?.list) {
             setQuestions(data?.list)
@@ -39,11 +40,13 @@ export const Question = ({ callApi, setPage, setHasMore, setDataQuestion, toast,
     }
     const addQuestion = () => {
         const newQuestion = {
-            id: Date.now(),
+            _id: Date.now().toString(),
             question: '',
             imgUrl: null,
             options: [{ key: '', text: '' }],
-            answer: ''
+            answer: '',
+            explain: ""
+
         };
         setQuestions([...questions, newQuestion]);
     };
@@ -51,7 +54,7 @@ export const Question = ({ callApi, setPage, setHasMore, setDataQuestion, toast,
     // Xóa câu hỏi
     const removeQuestion = (questionId) => {
         if (questions.length > 1) {
-            setQuestions(questions.filter(q => q.id !== questionId));
+            setQuestions(questions.filter(q => q._id !== questionId));
         }
     };
 
@@ -59,13 +62,13 @@ export const Question = ({ callApi, setPage, setHasMore, setDataQuestion, toast,
     const updateQuestion = (questionId, field, value) => {
 
         setQuestions(questions.map(q =>
-            q.id === questionId ? { ...q, [field]: value } : q
+            q._id === questionId ? { ...q, [field]: value } : q
         ));
     };
     //cập nhật đáp án đúng 
     const updateCorrectAnswer = (questionId, field, value) => {
         setQuestions(questions.map(q =>
-            q.id === questionId ? { ...q, [field]: value } : q
+            q._id === questionId ? { ...q, [field]: value } : q
         ));
     };
     // Xử lý upload ảnh
@@ -73,15 +76,23 @@ export const Question = ({ callApi, setPage, setHasMore, setDataQuestion, toast,
         const file = e.target.files[0];
         if (file) {
             setIndex(prev => [...prev, qIndex]);
-            setQuestions(questions.map(q =>
-                q.id === questionId ? { ...q, imgUrl: file } : q
+            setQuestions(questions.map(q => {
+                return q._id === questionId ? { ...q, imgUrl: file } : q
+
+            }
             ));
         }
     };
+    const handleOnchangeExplain = (id, e) => {
+        const value = e.target.value
+        setQuestions(questions.map((q) => {
+            return q._id === id ? { ...q, explain: value } : q
+        }))
+    }
     // Thêm câu trả lời
     const handleAddAnswer = (questionId) => {
         setQuestions(questions.map(q => {
-            if (q.id === questionId && q.options.length < 4) {
+            if (q._id === questionId && q.options.length < 4) {
                 return { ...q, options: [...q.options, { key: '', text: '' }] };
             }
             return q;
@@ -91,7 +102,7 @@ export const Question = ({ callApi, setPage, setHasMore, setDataQuestion, toast,
     // Xóa câu trả lời
     const removeAnswer = (questionId, answerIndex) => {
         setQuestions(questions.map(q => {
-            if (q.id === questionId && q.options.length > 1) {
+            if (q._id === questionId && q.options.length > 1) {
                 const newAnswers = q.options.filter((_, i) => i !== answerIndex);
                 return {
                     ...q,
@@ -106,7 +117,7 @@ export const Question = ({ callApi, setPage, setHasMore, setDataQuestion, toast,
     // Cập nhật câu trả lời
     const updateAnswer = (questionId, answerIndex, value) => {
         setQuestions(questions.map(q => {
-            if (q.id === questionId) {
+            if (q._id === questionId) {
                 const labels = ['A', 'B', 'C', 'D'];
                 const newAnswers = [...q.options];
                 newAnswers[answerIndex] = { key: labels[answerIndex], text: value };
@@ -150,7 +161,7 @@ export const Question = ({ callApi, setPage, setHasMore, setDataQuestion, toast,
         }
         setLoading(true);
         try {
-            const formData = new FormData
+            const formData = new FormData()
             formData.append('chapter', chapter)
             formData.append('list', JSON.stringify(questions))
             questions.forEach((q) => {
@@ -159,6 +170,8 @@ export const Question = ({ callApi, setPage, setHasMore, setDataQuestion, toast,
             (path === "update" &&
                 formData.append('index', JSON.stringify(index))
             )
+
+
             const create = await Post(`/theory/${path}/${id}`, formData)
             if (create.status === 200) {
                 if (path === "update") {
@@ -178,11 +191,11 @@ export const Question = ({ callApi, setPage, setHasMore, setDataQuestion, toast,
     };
     const handleCancel = () => {
         setQuestions([{
-            id: 1,
+            _id: 1,
             question: '',
             imgUrl: null,
             options: [{ key: '', text: '' }],
-            answer: ''
+            answer: '',
         }]);
         setTurnOn(true);
     };
@@ -190,24 +203,24 @@ export const Question = ({ callApi, setPage, setHasMore, setDataQuestion, toast,
         try {
             const deleteItem = await Delete(`/theory/delete_item/${idItem}/${id}`)
 
-                if (deleteItem.status === 200) {
-                    // Xóa khỏi state questions
-                    setQuestions(prev => prev.filter(q => q._id !== idItem));
+            if (deleteItem.status === 200) {
+                // Xóa khỏi state questions
+                setQuestions(prev => prev.filter(q => q._id !== idItem));
 
-                    // Xóa khỏi state dataQuestion
-                    setDataQuestion(prev => {
-                        const updated = [...prev];
-                        if (updated[0] && updated[0].list) {
-                            updated[0] = {
-                                ...updated[0],
-                                list: updated[0].list.filter(item => item._id !== idItem)
-                            };
-                        }
-                        return updated;
-                    });
+                // Xóa khỏi state dataQuestion
+                setDataQuestion(prev => {
+                    const updated = [...prev];
+                    if (updated[0] && updated[0].list) {
+                        updated[0] = {
+                            ...updated[0],
+                            list: updated[0].list.filter(item => item._id !== idItem)
+                        };
+                    }
+                    return updated;
+                });
 
-                    toast.success('Thành công');
-                
+                toast.success('Thành công');
+
             }
         } catch (error) {
             console.log(error)
@@ -224,7 +237,7 @@ export const Question = ({ callApi, setPage, setHasMore, setDataQuestion, toast,
                     value={chapter || ""}
                 />
             </div>
-            {questions.map((q, qIndex) => {
+            {questions?.map((q, qIndex) => {
                 return (
                     <div key={qIndex} className={cx('boxQuestion')} style={{
                         border: "2px solid #e8e8e8",
@@ -242,10 +255,10 @@ export const Question = ({ callApi, setPage, setHasMore, setDataQuestion, toast,
                                     size='lg'
                                     icon={cilTrash}
                                     onClick={() => {
-                                        if (q.id === undefined) {
+                                        if (q._id === undefined) {
                                             return handleDeleteItemList(q._id)
                                         }
-                                        return removeQuestion(q.id)
+                                        return removeQuestion(q._id)
                                     }}
                                     style={{ cursor: "pointer", color: "black" }}
                                 />
@@ -254,11 +267,11 @@ export const Question = ({ callApi, setPage, setHasMore, setDataQuestion, toast,
 
                         <div>
                             <Input
-                                name={`question-${q.id}`}
+                                name={`question-${q._id}`}
                                 label={'Câu hỏi *'}
                                 placeholder={"Bạn vui lòng nhập câu hỏi..."}
                                 value={q.question || ""}
-                                onChange={(e) => updateQuestion(q.id, 'question', e.target.value)}
+                                onChange={(e) => updateQuestion(q._id, 'question', e.target.value)}
                             />
                         </div>
 
@@ -266,13 +279,13 @@ export const Question = ({ callApi, setPage, setHasMore, setDataQuestion, toast,
                             <p className={cx('titleInput')}><b>Ảnh (tùy chọn)</b></p>
                             <Input
                                 type="file"
-                                id={`file-${q.id}`}
+                                id={`file-${q._id}`}
                                 accept="image/*"
                                 style={{ display: "none" }}
                                 name={'imgUrl'}
-                                onChange={(e) => handleFileChange(q.id, qIndex, e)}
+                                onChange={(e) => handleFileChange(q._id, qIndex, e)}
                             />
-                            <label htmlFor={`file-${q.id}`} style={{
+                            <label htmlFor={`file-${q._id}`} style={{
                                 display: "inline-block",
                                 padding: "10px 20px",
                                 backgroundColor: "rgb(26, 78, 141)",
@@ -308,17 +321,17 @@ export const Question = ({ callApi, setPage, setHasMore, setDataQuestion, toast,
                                 <div key={aIndex} className={cx('boxInputAnswer')} style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "10px" }}>
                                     <Input
                                         style={{ margin: 0, width: "98%" }}
-                                        name={`answer-${q.id}-${aIndex}`}
+                                        name={`answer-${q._id}-${aIndex}`}
                                         placeholder={`Câu trả lời ${aIndex + 1}...`}
                                         value={answer.text || ""}
-                                        onChange={(e) => updateAnswer(q.id, aIndex, e.target.value)}
+                                        onChange={(e) => updateAnswer(q._id, aIndex, e.target.value)}
                                     />
                                     {q.options.length > 1 && (
                                         <CIcon
                                             className={cx('iconAnswer')}
                                             size='xl'
                                             icon={cilTrash}
-                                            onClick={() => removeAnswer(q.id, aIndex)}
+                                            onClick={() => removeAnswer(q._id, aIndex)}
                                             style={{ cursor: "pointer", color: "black" }}
                                         />
                                     )}
@@ -334,7 +347,7 @@ export const Question = ({ callApi, setPage, setHasMore, setDataQuestion, toast,
                                         cursor: "pointer",
                                         fontWeight: 600
                                     }}
-                                    onClick={() => handleAddAnswer(q.id)}
+                                    onClick={() => handleAddAnswer(q._id)}
                                 >
                                     + Thêm câu trả lời
                                 </p>
@@ -345,7 +358,7 @@ export const Question = ({ callApi, setPage, setHasMore, setDataQuestion, toast,
                             <p style={{ margin: 0 }}><b>Câu trả lời đúng *</b></p>
                             <select
                                 value={q.answer}
-                                onChange={(e) => updateCorrectAnswer(q.id, 'answer', e.target.value)}
+                                onChange={(e) => updateCorrectAnswer(q._id, 'answer', e.target.value)}
                                 style={{
                                     width: "100%",
                                     padding: "10px",
@@ -367,6 +380,14 @@ export const Question = ({ callApi, setPage, setHasMore, setDataQuestion, toast,
                                 }
                                 )}
                             </select>
+                        </div>
+                        <div style={{ marginTop: "20px" }}>
+                            <p style={{ margin: 0 }}><b>Giải thích *</b></p>
+                            <CFormTextarea
+                                value={q.explain}
+                                name={`explain-${q._id}`}
+                                onChange={(e) => handleOnchangeExplain(q._id, e)}
+                                style={{ marginTop: 5 }} placeholder="..." rows={4}></CFormTextarea>
                         </div>
                     </div>
                 )
@@ -396,7 +417,7 @@ export const Question = ({ callApi, setPage, setHasMore, setDataQuestion, toast,
                 <CButton type='button' color="danger" style={{ color: '#fff' }} onClick={handleCancel}>
                     Hủy
                 </CButton>
-                <CButton type='submit' className={cx('buttonCreate')}>
+                <CButton type={loading ? "button" : 'submit'} className={cx('buttonCreate')}>
                     {loading ? <LoadingButton /> : `Lưu ${questions.length} câu hỏi`}
                 </CButton>
             </div>

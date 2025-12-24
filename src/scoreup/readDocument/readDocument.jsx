@@ -29,15 +29,15 @@ export const ReadDocument = () => {
                 <iframe
                     src={files?.url}
                     width="100%"
-                    height="600px"
+                    height="100%"
                     title={files?.name}
                     style={{ border: "1px solid #ccc", borderRadius: "8px", marginBottom: "20px" }}
                 /> :
                 <iframe
                     src={viewerUrl}
-                    height="710px"
+                    height="100%"
                     title={files?.name}
-                    style={{ width:"100%",border: "1px solid #ccc", borderRadius: "8px", marginBottom: "20px" }}
+                    style={{ width: "100%", border: "1px solid #ccc", borderRadius: "8px", marginBottom: "20px" }}
                 />
             }
 

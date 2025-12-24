@@ -10,6 +10,7 @@ import * as Yup from "yup"
 import { Input } from "../../inputs/inputs";
 import { useNavigate } from "react-router-dom";
 import { Delete, Post } from "../../../baseService/baseService";
+import { TextAlignCenter } from "lucide-react";
 
 const cx = classNames.bind(style)
 
@@ -84,7 +85,8 @@ export const UpdateDocument = ({ path, toast, dataDocument, bin, callApi }) => {
                     <Input
                         onChange={formikUpdate.handleChange}
                         name={"code"}
-                        style={{ backgroundColor: "#fff" }}
+                        styleInput={{textAlign:"center"}}
+                        className={cx('code')}
                         value={formikUpdate.values.code}
                         disabled={update === dataDocument._id ? false : true}
                     />

@@ -13,7 +13,7 @@ import {
 } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
 import { cilCloudDownload, cilFlagAlt, cilTask, cilSpeedometer, cilFile } from '@coreui/icons'
-import { NavLink, Routes, useLocation, useNavigate } from "react-router-dom";
+import { NavLink, Routes, useLocation, useNavigate, useParams } from "react-router-dom";
 import { Route } from "react-router-dom";
 import { ScoreUpPractice } from "./scoreupPractice/scoreupPractice";
 import { AlgorithmAndData } from "./algorithmAndData/algorithmAndData";
@@ -24,13 +24,17 @@ import { Dashboard } from "./dashboard/dashboard";
 import { Document } from "./document/document";
 import { useMsal } from "@azure/msal-react";
 import { ReadDocument } from "./readDocument/readDocument";
+import { TheoryOfDocument } from "./theoryOfDocument/theoryOfDocument";
+import { ModalUpdateUser } from "../components/modalUpdate/modalUpdateUser";
 const cx = classNames.bind(style)
 
 export const ScoreUp = () => {
     const [sidebar, setSidebar] = useState(false)
     const { instance } = useMsal();
     const location = useLocation()
+    const { code } = useParams()
     const navigate = useNavigate()
+    const [visible, setVisible] = useState(false)
     const cssSidebar = sidebar ? "sidebar-narrow" : ""
     const handleLogout = (e) => {
         e.preventDefault();
@@ -38,10 +42,26 @@ export const ScoreUp = () => {
         navigate('/code_lap_practice')
         instance.logoutRedirect();
         localStorage.removeItem('token');
+        localStorage.removeItem('user');
     };
 
+    useEffect(() => {
+        const path = location.pathname.split('/')
+        const filterPath = path.filter((e, i) => i !== 4)
+        const joinPath = filterPath.join('/')
+        if (joinPath === "/scoreup/practice/theory") {
+            setSidebar(true)
+        }
+    }, [location])
+    useEffect(() => {
+        const user = JSON.parse(localStorage.getItem('user'))
+        if (user.classes === "" || user.userCode === "") {
+            setVisible(true)
+        }
+    }, [])
     return (
         <div className={cx('scoreUp')}>
+            <ModalUpdateUser visible={visible} setVisible={setVisible} />
             <CSidebar className={`border-end ${cssSidebar}`}>
                 <CSidebarHeader className="border-bottom">
                     <div className={cx('boxImg')}>
@@ -125,6 +145,7 @@ export const ScoreUp = () => {
                     <Route path="/practice/theory/:code" element={<DoTheory />} />
                     <Route path="/dashboard" element={<Dashboard />} ></Route>
                     <Route path="/document" element={<Document />} />
+                    <Route path="/list/theory/:_id" element={<TheoryOfDocument />} />
                 </Routes>
             </div>
         </div>

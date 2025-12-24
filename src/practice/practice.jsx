@@ -20,14 +20,14 @@ export const Practice = () => {
         const authenticateWithBackend = async () => {
             // Skip nếu chưa authenticated hoặc không có account
             if (!isAuthenticated || accounts.length === 0) {
-               
+
                 return;
             }
 
             // Skip nếu đã có token trong localStorage
             const existingToken = localStorage.getItem('token');
             if (existingToken) {
-              
+
                 navigate('/scoreup/dashboard');
                 return;
             }
@@ -78,6 +78,7 @@ export const Practice = () => {
                 if (login.status === 200) {
                     if (login.data?.token) {
                         localStorage.setItem('token', JSON.stringify(login.data.token));
+                        localStorage.setItem('user', JSON.stringify(login.data.data));
                         console.log("✅ Token saved, navigating to dashboard");
                         navigate('/scoreup/dashboard');
                     } else {
