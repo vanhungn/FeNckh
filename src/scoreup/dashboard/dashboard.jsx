@@ -21,7 +21,7 @@ export const Dashboard = () => {
         loadingRef.current = true;
         setLoading(true);
         try {
-            const data = await Get(`/mark?_id=${user._id}&skip=${page}&limit=${LIMIT}`)
+            const data = await Get(`/mark?_id=${user?._id}&skip=${page}&limit=${LIMIT}`)
             const newData = data?.data?.data || [];
 
             setDataHistory(prev =>

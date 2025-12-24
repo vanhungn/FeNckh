@@ -69,16 +69,17 @@ export const Practice = () => {
                         'Authorization': `Bearer ${token}`,
                         'Content-Type': 'application/json',
                     },
+
                     _skipAuthRefresh: true  // Skip retry interceptor
                 });
 
-                console.log("📥 Backend response status:", login.status);
-                console.log("📥 Backend response data:", login.data);
+                console.log("📥 Backend response status:", login?.status);
+                console.log("📥 Backend response data:", login?.data);
 
-                if (login.status === 200) {
-                    if (login.data?.token) {
+                if (login?.status === 200) {
+                    if (login?.data?.token) {
                         localStorage.setItem('token', JSON.stringify(login.data.token));
-                        localStorage.setItem('user', JSON.stringify(login.data.data));
+                        localStorage.setItem('user', JSON.stringify(login?.data?.data));
                         console.log("✅ Token saved, navigating to dashboard");
                         navigate('/scoreup/dashboard');
                     } else {

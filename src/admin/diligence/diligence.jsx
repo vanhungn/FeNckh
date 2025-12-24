@@ -17,11 +17,11 @@ export const Diligence = () => {
             const diligence = await Get(`/mark/admin?course=${course}&classes=${classes}`)
 
             if (data.status === 200) {
-                setListCourse(data.data.course)
-                setListClasses(data.data.classes)
+                setListCourse(data?.data?.course)
+                setListClasses(data?.data?.classes)
             }
             if (diligence.status === 200) {
-                setDataDiligence(diligence.data.data)
+                setDataDiligence(diligence?.data?.data)
             }
         } catch (error) {
             console.log(error)
@@ -36,7 +36,7 @@ export const Diligence = () => {
             setCourse(value)
             const diligence = await Get(`/mark/admin?course=${course}&classes=${value}`)
             if (diligence.status === 200) {
-                setDataDiligence(diligence.data.data)
+                setDataDiligence(diligence?.data?.data)
             }
         } catch (error) {
             console.log(error)
@@ -48,7 +48,7 @@ export const Diligence = () => {
             setClasses(value)
             const diligence = await Get(`/mark/admin?course=${value}&classes=${classes}`)
             if (diligence.status === 200) {
-                setDataDiligence(diligence.data.data)
+                setDataDiligence(diligence?.data?.data)
             }
         } catch (error) {
             console.log(error)
@@ -101,9 +101,9 @@ export const Diligence = () => {
                                     <CTableRow key={index}>
 
                                         <CTableDataCell>{index}</CTableDataCell>
-                                        <CTableDataCell>{item?.infoUser.name}</CTableDataCell>
-                                        <CTableDataCell>{item?.infoUser.userCode}</CTableDataCell>
-                                        <CTableDataCell>{item?.infoUser.classes}</CTableDataCell>
+                                        <CTableDataCell>{item?.infoUser?.name}</CTableDataCell>
+                                        <CTableDataCell>{item?.infoUser?.userCode}</CTableDataCell>
+                                        <CTableDataCell>{item?.infoUser?.classes}</CTableDataCell>
                                         <CTableDataCell>{item?.nameCourse}</CTableDataCell>
                                         <CTableDataCell>{item?.codeCourse}</CTableDataCell>
                                         <CTableDataCell>{item?.progress}</CTableDataCell>
