@@ -162,18 +162,18 @@ export const Home = () => {
           <div >
             <div style={{ display: "flex", justifyContent: "space-between" }}>
               <div className={cx('boxIntroduce')} style={{ marginTop: 100 }} data-aos="fade-up">
-                <img width={150} height={100} src="../../public/30.png" alt="" />
+                <img width={150} height={100} src="https://i.ibb.co/3VGbhB4/30.png" alt="" />
                 <h5>Học phí <br />
                   ưu đãi</h5>
               </div>
               <div className={cx('boxIntroduce')} data-aos="fade-up">
-                <img width={150} height={100} src="../../public/31.png" alt="" />
+                <img width={150} height={100} src="https://i.ibb.co/9HnXXzCj/31.png" alt="" />
 
                 <h5> Cơ sở vật <br />
                   chất hiện đại</h5>
               </div>
               <div className={cx('boxIntroduce')} style={{ marginTop: 100 }} data-aos="fade-up">
-                <img width={150} height={100} src="../../public/35.png" alt="" />
+                <img width={150} height={100} src="https://i.ibb.co/WNsCJH1v/35.png" alt="" />
 
                 <h5> Chất lượng<br />
                   đào tạo</h5>
@@ -191,20 +191,20 @@ export const Home = () => {
             </div>
             <div style={{ marginBottom: "40px", display: "flex", justifyContent: "space-between" }}>
               <div className={cx('boxIntroduce')} data-aos="fade-up">
-                <img width={150} height={100} src="../../public/36.png" alt="" />
+                <img width={150} height={100} src="https://i.ibb.co/LhcwxFWd/36.png" alt="" />
 
                 <h5>Cơ hội du<br />
                   học tại nước<br />
                   ngoài</h5>
               </div>
               <div className={cx('boxIntroduce')} style={{ marginTop: 100 }} data-aos="fade-up">
-                <img width={150} height={100} src="../../public/37.png" alt="" />
+                <img width={150} height={100} src="https://i.ibb.co/L77hg7z/37.png" alt="" />
 
                 <h5>Cơ hội<br />
                   việc làm</h5>
               </div>
               <div className={cx('boxIntroduce')} data-aos="fade-up">
-                <img width={140} height={100} src="../../public/38.png" alt="" />
+                <img width={140} height={100} src="https://i.ibb.co/Z1kjNhS4/38.png" alt="" />
 
                 <h5>Môi trường<br />
                   năng động</h5>
@@ -251,7 +251,7 @@ export const Home = () => {
         </div>
         <div style={{ display: "grid", gridTemplateColumns: "1fr 30fr 1fr", alignItems: "center", gap: "15px" }}>
           <div onClick={() => handlePrev()} className={cx('buttonNext')} >
-            <svg  width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M16 4L8 12L16 20" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
 

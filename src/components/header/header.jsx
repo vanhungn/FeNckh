@@ -103,7 +103,7 @@ export const Header = () => {
             </div>
             <div className={cx('category')}>
                 <div className={cx('boxLogo')} onClick={() => navigate('/')}  >
-                    <img className={cx('logo')} src="../../public/logokhoa.jpg" alt="" />
+                    <img className={cx('logo')} src="https://i.ibb.co/6R0P3cZw/logokhoa.jpg" alt="" />
                     <div >
                         <p className={cx("nameVN")}>KHOA CÔNG NGHỆ THÔNG TIN</p>
                         <p className={cx('nameEl')}> Faculty of Information Technology</p>
