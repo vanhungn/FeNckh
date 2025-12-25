@@ -24,7 +24,7 @@ import { UpdateNews } from './news/updateNews/updateNews';
 import { ContactAdmin } from './contact/contact';
 import { Diligence } from './diligence/diligence';
 import style from "./admin.module.scss"
-import { NavLink, Route, Routes, useLocation, useParams } from 'react-router-dom';
+import { NavLink, Route, Routes, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 const cx = classNames.bind(style)
 
@@ -32,6 +32,7 @@ export const Admin = () => {
     const [sidebar, setSidebar] = useState(false)
     const cssSidebar = sidebar ? "sidebar-narrow" : ""
     const location = useLocation()
+    const navigate = useNavigate()
     const { _id } = useParams()
     if (location.pathname !== `/admin/news/update/${_id}` || location.pathname !== "/admin/news/create") {
         localStorage.removeItem("InitialData")
@@ -45,6 +46,13 @@ export const Admin = () => {
             setSidebar(true)
         }
     }, [])
+    const handleLogout = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        navigate('/')
+        localStorage.removeItem('token');
+        localStorage.removeItem('user');
+    };
     return (
         <div className={cx('admin')}>
             <CSidebar style={{ height: "100vh" }} className={`border-end ${cssSidebar}`}>
@@ -95,8 +103,12 @@ export const Admin = () => {
                         </CNavItem>
                     </NavLink>
                 </CSidebarNav>
-                <CSidebarHeader className="border-top">
-                    <CSidebarToggler />
+                <CSidebarHeader onClick={handleLogout} className="border-top">
+                    <div style={{ cursor: "pointer", display: "flex", alignItems: "center", gap: 10, color: "gray" }}>
+                        <CSidebarToggler />
+                        <span style={{ display: sidebar ? "none" : "block" }} >Đăng Xuất</span>
+                    </div>
+
                 </CSidebarHeader>
             </CSidebar>
             <div style={{ width: "100%", height: "100vh" }}>
