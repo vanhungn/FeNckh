@@ -24,7 +24,6 @@ export const DocumentAdmin = ({ path, title, headerDocx, bin }) => {
     const [totalPage, setTotalPage] = useState(0)
     const [colorTotal, setColorToatal] = useState(1)
     const [img, setImg] = useState([null]);
-    const [avatar, setAvatar] = useState(null)
     const [searchParams, setSearchParams] = useSearchParams();
     const [chooseFile, setChooseFile] = useState("")
     const [turnOn, setTurnOn] = useState(false)
@@ -54,9 +53,7 @@ export const DocumentAdmin = ({ path, title, headerDocx, bin }) => {
         setImg(newImgs);
         setChooseFile("")
     };
-    const handleFileChangeAvatar = (e) => {
-        setAvatar(e.target.files[0])
-    }
+  
     const handleAddImage = () => {
         setImg([...img, null]);
     };
@@ -105,7 +102,7 @@ export const DocumentAdmin = ({ path, title, headerDocx, bin }) => {
                         formData.append('file', file);
                     }
                 });
-                formData.append('avatar', avatar);
+            
                 formData.append('course', value.course);
                 formData.append('codeCourse', value.codeCourse);
                 const create = await Post("/document/create", formData)
@@ -134,10 +131,7 @@ export const DocumentAdmin = ({ path, title, headerDocx, bin }) => {
         const data = img.filter((q, idex) => idex !== index)
         setImg(data)
     }
-    const handleDeleteAvatar = () => {
-        setAvatar(null)
-    }
-
+ 
     return (
         <div className={cx('eDocument')} >
             <Toaster position="top-right" />
