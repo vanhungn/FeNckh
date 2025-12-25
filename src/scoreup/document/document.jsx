@@ -74,9 +74,12 @@ export const Document = () => {
         setSearch(e.target.value)
     }
     const handleDoHomework = (_idCourse) => {
-        navigate(
-            `/scoreup/document/docx?_idCourse=${_idCourse}&selectCode=${selectCode}`
-        );
+        if (selectCode !== "") {
+            navigate(
+                `/scoreup/document/docx?_idCourse=${_idCourse}&selectCode=${selectCode}`
+            );
+        }
+
     };
 
     return (
@@ -111,6 +114,7 @@ export const Document = () => {
                         </select>
 
                         <button
+
                             className={cx("btnTitle")}
                             onClick={() => handleDoHomework(item._id)}
                         >
