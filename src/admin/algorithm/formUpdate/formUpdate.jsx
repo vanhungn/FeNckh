@@ -11,7 +11,7 @@ import { Delete, Post } from "../../../baseService/baseService";
 import { useSearchParams } from "react-router-dom";
 const cx = classNames.bind(style)
 
-export const FormUpdate = ({ data, callApi, setColorToatal }) => {
+export const FormUpdate = ({ data, callApi, setColorToatal, setDataAlgorithm, setTotalPage }) => {
     const [idTopic, setIdTopic] = useState("")
     const [loading, setLoading] = useState(false)
     const [searchParams, setSearchParams] = useSearchParams();
@@ -38,7 +38,10 @@ export const FormUpdate = ({ data, callApi, setColorToatal }) => {
                 setLoading(true)
                 const update = await Post(`/problem/update/${data._id}`, value)
                 if (update.status === 200) {
-                    callApi()
+                    const page = searchParams.get('page')
+                    const data = await Get(`/problem/algorithm?limit=8&skip=${page}`)
+                    setDataAlgorithm(data.data.data)
+                    setTotalPage(data.data.total)
                     setIdTopic('')
                 }
             } catch (error) {

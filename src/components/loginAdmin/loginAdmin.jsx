@@ -26,6 +26,7 @@ export const LoginAdmin = () => {
                 const login = await Post('/users/login', value)
                 if (login.status === 200) {
                     localStorage.setItem('token', JSON.stringify(login?.data?.accessToken))
+                    localStorage.setItem('user', JSON.stringify(login?.data?.data))
                     navigate("/admin/document")
                     toast.success('Thành công')
                 }

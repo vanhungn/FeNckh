@@ -224,7 +224,7 @@ export const AlgorithmAdmin = () => {
                             dataAlgorithm?.map((item, index) => {
                                 return (
                                     <div key={index}>
-                                        <FormUpdate setColorToatal={setColorToatal} callApi={callApi} data={item} />
+                                        <FormUpdate setTotalPage={setTotalPage} setDataAlgorithm={setDataAlgorithm} setColorToatal={setColorToatal} callApi={callApi} data={item} />
                                     </div>
 
                                 )
