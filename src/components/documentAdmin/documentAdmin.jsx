@@ -216,32 +216,7 @@ export const DocumentAdmin = ({ path, title, headerDocx, bin }) => {
                                 <p className={cx('pError')}>{chooseFile}</p>
                             </div>
                         </div>
-                        <div>
-                            <p className={cx('titleInput')}> <b>Chọn ảnh *</b> </p>
-                            <CFormInput
-                                type="file"
-                                id={'avatar'}
-                                accept="image/*"
-                                style={{ display: "none" }}
-                                onChange={handleFileChangeAvatar}
-                            />
-                            <div style={{ display: "flex", padding: 5, backgroundColor: "rgba(233, 232, 232, 1)", margin: 10, width: "fit-content", borderRadius: 5 }}>
-                                <label htmlFor={`avatar`} className={cx("upload-label")}>
-                                    + Chọn ảnh
-                                </label>
-                            </div>
-                            {avatar && (
-                                <div>
-                                    <img
-                                        src={URL.createObjectURL(avatar)}
-                                        alt="preview"
-                                        className={cx("previewImg")}
-                                    />
-                                    <CIcon className={cx('icon')} size='lg' icon={cilTrash} onClick={() => handleDeleteAvatar()} />
-                                </div>
-
-                            )}
-                        </div>
+                       
                     </div>
                     <div style={{ display: "flex", justifyContent: "flex-end", gap: 15 }}>
                         <CButton type='button' color="danger" style={{ color: '#fff' }} onClick={() => handleTurnOn()} >Hủy</CButton>
