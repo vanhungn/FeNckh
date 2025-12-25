@@ -40,9 +40,9 @@ export const FormUpdate = ({ data, callApi, setColorToatal, setDataAlgorithm, se
                 if (update.status === 200) {
                     const page = searchParams.get('page')
                     const data = await Get(`/problem/algorithm?limit=8&skip=${page}`)
-                    setDataAlgorithm(data.data.data)
-                    setTotalPage(data.data.total)
-                    setIdTopic('')
+                    setDataAlgorithm(data?.data?.data)
+                    setTotalPage(data?.data?.total)
+                    setIdTopic("")
                 }
             } catch (error) {
                 console.log(error)
@@ -68,7 +68,7 @@ export const FormUpdate = ({ data, callApi, setColorToatal, setDataAlgorithm, se
             console.log(error)
         }
     }
-
+    console.log(idTopic)
     return (
         <form onSubmit={formikTopic.handleSubmit} className={cx('topic')}>
             <div >
