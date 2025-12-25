@@ -7,7 +7,7 @@ import * as Yup from "yup"
 import { useState } from "react";
 import CIcon from "@coreui/icons-react";
 import LoadingButton from "../../../components/loadingButton/loadingButton";
-import { Delete, Post } from "../../../baseService/baseService";
+import { Delete, Get, Post } from "../../../baseService/baseService";
 import { useSearchParams } from "react-router-dom";
 const cx = classNames.bind(style)
 
